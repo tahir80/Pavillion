@@ -1,0 +1,57 @@
+{% extends 'layout_main.html' %} {% block content %}
+
+<div id="AMT_submit_active">
+  <!-- <img src="{{ url_for('static', filename='img/submit_button.JPG') }}" id="AMT_button" alt="Click here to submit the task"> -->
+
+  <div id="end-dialog-message" title="Ready to submit?">
+  </div>
+  <form id="endForm" action="{{ name.amazon_host }}" method="POST">
+    <input type="hidden" id="user-input" value="" name="user-input" />
+    <input type="hidden" id="assignmentId" value="{{ name.assignment_id }}" name="assignmentId" />
+    <input type="hidden" id="workerId" value="{{ name.worker_id }}" name="workerId" />
+    <input type="hidden" id="hitId" value="{{ name.hit_id }}" name="hitId" />
+  </form>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <!-- Colomn for submit task -->
+
+    <!-- colomn for score board -->
+    <div class="col-lg-12" class="card card-body">
+
+      <table style="width:100%" border="1">
+        <tr bgcolor="#99cc00">
+          <td text-align: left;><b>Waiting Stage:</b></td>
+          <td text-align: left;>waited: {{name.time_waited}}</td>
+          <td text-align: left;>Fix Reward: {{name.fix_price}}</td>
+          <td text-align: left;>Bonus Earned: {{name.reward}}</td>
+        </tr>
+  <tr bgcolor="#dddddd">
+    <td text-align: left;>Time Elapsed: </td>
+    <td text-align: left;><span id="timer"></td>
+  </tr>
+</table>
+
+</div>
+</div>
+
+<div class="row">
+  <div class="d-flex justify-content-center">
+
+    <div class="col-lg-12" class="card card-body">
+      <section id="submit_task_active">
+        <button type="button" class="btn btn-primary btn-lg btn-block" id="submit_task">SUBMIT THIS TASK?</button>
+      </section>
+    </div>
+
+  </div>
+</div>
+</div>
+<!-- End of container -->
+
+
+
+
+{% endblock %}

@@ -1,4 +1,4 @@
-from app.crowd_control import crowd_control
+from app.Pavillion import Pavillion
 from app.auth.models import User
 from app import create_app, db
 from sqlalchemy import exc,asc, desc, and_, or_
@@ -13,9 +13,8 @@ from flask import render_template, request, redirect, url_for, flash # for flash
 
 # from app.crowd_control.forms import CreateNewProject, CreateNewTask
 from app.admin_panel.models import Project, Task
-from app.crowd_control.models import Session, LiveStatus, WorkerStatus, Worker, Message, Robot, \
-                                     SpokenByUser, SpokenByRobot, RewardWaiting, DetailedStatus, Assignments, \
-                                     SESSION_SQLALCHEMY, RewardActive
+from app.Pavillion.models import Session, LiveStatus, WorkerStatus, Worker, DetailedStatus, Assignments, \
+                                     SESSION_SQLALCHEMY
 
 
 
@@ -31,27 +30,13 @@ from boto.mturk.price import Price
 
 from oocsi import OOCSI
 
-from app import socketio, STT_USERNAME, STT_PASSWORD, STT_APIKEY, STT_URL, endpoint_url, AMAZON_HOST
-from app.crowd_control.events import isMovePossible, postJob
+from app import socketio, endpoint_url, AMAZON_HOST
+from app.Pavillion.events import isMovePossible, postJob
 from app import socketio
 from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect
 
 from app import create_app
-
-@crowd_control.route('/api/speech-to-text/token')
-def getSttToken():
-	print(STT_USERNAME)
-	authorization = Authorization(username=STT_USERNAME, password=STT_PASSWORD)
-	return authorization.get_token(url=SpeechToText.default_url)
-
-	# if (STT_APIKEY):
-	# 	iamTokenManager = IAMTokenManager(iam_apikey=STT_APIKEY)
-	# 	token = iamTokenManager.get_token()
-	# else:
-    #     authorization = Authorization(username=STT_USERNAME, password=STT_PASSWORD)
-    # 	token = authorization.get_token(url=STT_URL)
-	# return token
 
 #########################SNS############################
 #https://blog.mturk.com/tutorial-using-amazon-sns-with-amazon-mturk-a0c6562717cb (FOR NECESSARY STEPS)
@@ -154,61 +139,8 @@ def msg_process(msg, tstamp):
     except exc.IntegrityError:
         pass
 
-# socketio.on_event('custom even', msg_process, namespace='/chat')
-
-@crowd_control.route('/feedback')
-def feedback():
-    render_data = {
-        "worker_id": request.args.get("workerId"),
-        "assignment_id": request.args.get("assignmentId"),
-        "amazon_host": AMAZON_HOST,
-        "hit_id": request.args.get("hitId"),
-        "time_waited": request.args.get("time_waited"),
-        "reward": request.args.get("reward")}
-
-    return render_template("feedback.html", name = render_data)
-
-@crowd_control.route('/stt')
-def stt():
-    return render_template("microphone-streaming-auto-stop.html")
-
-
-@crowd_control.route('/tutorial', methods=['GET', 'POST'])
-def tutorial():
-    print(request.args.get("assignmentId"))
-
-    render_data = {
-        "worker_id": request.args.get("workerId"),
-        "assignment_id": request.args.get("assignmentId"),
-        "amazon_host": AMAZON_HOST,
-        "hit_id": request.args.get("hitId"),
-        }
-
-    resp = make_response(render_template("tutorial.html", name = render_data))
-
-    #This is particularly nasty gotcha.
-    #Without this header, your iFrame will not render in Amazon
-    resp.headers['x-frame-options'] = 'this_can_be_anything'
-    return resp
-
-
-@crowd_control.route('/tablet')
-def tablet():
-    try:
-        # tutorial_workers_count = LiveStatus.query.filter(LiveStatus.status_id == 0).count()
-        waiting_workers_count = LiveStatus.query.filter(LiveStatus.status_id == 1).count()
-        active_workers_count = LiveStatus.query.filter(LiveStatus.status_id == 2).count()
-    except:
-        # tutorial_workers_count = 0
-        waiting_workers_count = 0
-        active_workers_count = 0
-    render_data = {'active': active_workers_count,
-                  'waiting': waiting_workers_count}
-    return render_template("tablet_display.html", name = render_data)
-
-
 # do stuff here, like calling your favorite SMS gateway API
-@crowd_control.route('/api/from_mturk', methods = ['GET', 'POST', 'PUT'])
+@Pavillion.route('/api/from_mturk', methods = ['GET', 'POST', 'PUT'])
 def sns():
     # AWS sends JSON with text/plain mimetype
 
@@ -224,71 +156,8 @@ def sns():
 
     return 'OK\n'
 
-# @crowd_control.route('/api/from_mturk', methods=['GET', 'POST'])
-# def getNotifications():
-#     if request.method == 'POST' or request.method == 'GET':
-#         data = request.data
-#         dataDict = json.loads(data)
-#         print(dataDict)
-
-
-@crowd_control.route('/task', methods=['GET', 'POST'])
-def task():
-    #The following code segment can be used to check if the turker has accepted the task yet
-    status = 0   # yet to determined
-    bonus = 0
-    waited_time = ''
-    if request.args.get("assignmentId") == "ASSIGNMENT_ID_NOT_AVAILABLE":
-        pass
-    else:
-        # pass
-        try:
-            worker = Worker.query.filter_by(AMT_worker_id=request.args.get("workerId")).first()
-            s = Session.query.filter_by(status="Live").first()
-            if worker != None:
-                 live_status = LiveStatus.query.filter(LiveStatus.s_id == s.id).\
-                                           filter(LiveStatus.w_id == worker.id).\
-                                           filter(or_(LiveStatus.status_id == 1,LiveStatus.status_id == 2)).first()
-                 if live_status != None:
-                     if live_status.status_id == 2:
-                         status = 2
-                     else:
-                         status = 1
-                 else:
-                     status = 1
-            else:
-                status = 1
-
-            # reward_waiting = RewardWaiting.query.filter(RewardWaiting.s_id == s.id).\
-            #                     filter(RewardWaiting.w_id == worker.id).\
-            #                     order_by(desc(RewardWaiting.time_stamp)).first()
-            # if reward_waiting != None:
-            #     bonus = reward_waiting.reward
-            #     waited_time = reward_waiting.waited_time
-
-        except exc.IntegrityError:
-            pass
-
-
-
-    render_data = {
-        "worker_id": request.args.get("workerId"),
-        "assignment_id": request.args.get("assignmentId"),
-        "amazon_host": AMAZON_HOST,
-        "hit_id": request.args.get("hitId"),
-        "status": status,
-        "time_waited": waited_time,
-        "reward": bonus}
-
-    resp = make_response(render_template("task.html", name = render_data))
-
-    #This is particularly nasty gotcha.
-    #Without this header, your iFrame will not render in Amazon
-    resp.headers['x-frame-options'] = 'this_can_be_anything'
-    return resp
-
-@crowd_control.route('/waiting_room', methods=['GET', 'POST'])
-def waiting_room():
+@Pavillion.route('/waiting_task', methods=['GET', 'POST'])
+def waiting_task():
 
     try:
         active_task = Task.query.filter_by(task_status="Active").first()
@@ -342,7 +211,7 @@ def waiting_room():
 
 ######################----MAIN TASk -----############################
 
-@crowd_control.route('/main_task', methods=['GET', 'POST'])
+@Pavillion.route('/main_task', methods=['GET', 'POST'])
 def main_task():
 
     active_task = Task.query.filter_by(task_status="Active").first()

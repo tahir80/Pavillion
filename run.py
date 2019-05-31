@@ -1,9 +1,7 @@
 from app import create_app, db, socketio
 from app.auth.models import User
 from app.admin_panel.models import Project, Task
-from app.crowd_control.models import Session, LiveStatus, WorkerStatus, Worker, Message, Robot, \
-                                     SpokenByUser, SpokenByRobot, RewardWaiting, DetailedStatus, Assignments, \
-                                     SESSION_SQLALCHEMY, RewardActive
+from app.Pavillion.models import Session, LiveStatus, WorkerStatus, Worker, DetailedStatus,Assignments,SESSION_SQLALCHEMY
 from sqlalchemy import exc
 from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect
@@ -18,7 +16,7 @@ from flask import session
 # ------------------------------------------
 
 #-----------------PRODUCTION---------------------
-flask_app = create_app('prod')
+flask_app = create_app('dev')
 
 with flask_app.app_context():
     db.create_all()

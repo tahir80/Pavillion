@@ -1,11 +1,9 @@
 from app import db
 from app.auth.models import User
 from app.admin_panel.models import Project, Task
-from app.crowd_control.models import Session, LiveStatus, WorkerStatus, Worker, Message, Robot, \
-                                      SpokenByUser, SpokenByRobot, RewardWaiting, DetailedStatus, Assignments, SESSION_SQLALCHEMY, \
-                                      RewardActive, Tutorial
+from app.Pavillion.models import Session, LiveStatus, WorkerStatus, Worker, DetailedStatus, Assignments, SESSION_SQLALCHEMY
 
-from app.crowd_control import crowd_control
+from app.Pavillion import Pavillion
 
 from sqlalchemy import exc,asc, desc, and_, or_
 from flask_socketio import SocketIO, emit, join_room, leave_room, \

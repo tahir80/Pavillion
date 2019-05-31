@@ -15,6 +15,12 @@
 
 
 <div class="container">
+
+  <div class="row">
+    <div class="col-lg-12" class="card card-body">
+      <h2 align="center">Main Task</h2>
+   </div>
+</div>
   <div class="row">
     <!-- Colomn for submit task -->
 
@@ -24,17 +30,35 @@
       <table style="width:100%" border="1">
         <tr bgcolor="#99cc00">
           <td text-align: left;><b>Waiting Stage:</b></td>
-          <td text-align: left;>waited: {{name.time_waited}}</td>
-          <td text-align: left;>Fix Reward: {{name.fix_price}}</td>
-          <td text-align: left;>Bonus Earned: {{name.reward}}</td>
+          <td text-align: left;><b>waited: {{name.time_waited}}</b></td>
+          <td text-align: left;><b>Fix Reward: {{name.fix_price}}</b></td>
+          <td text-align: left;><b>Bonus Earned: {{name.reward}}</b></td>
+        </tr
+        <tr bgcolor="#99cc00">
+          <td text-align: left;><b>Active Stage:</b></td>
+          <td text-align: left;><b>Work-related Bonus</b></td>
+          <td text-align: left;><b>replace this row with work-related bonuses (if any)</b></td>
+          <td text-align: left;><b>Bonus: $</b></td>
         </tr>
-  <tr bgcolor="#dddddd">
-    <td text-align: left;>Time Elapsed: </td>
-    <td text-align: left;><span id="timer"></td>
+  <tr bgcolor="#99cc00">
+    <td text-align: left;></td>
+    <td text-align: left;><b>Time Elapsed: </b></td>
+    <td text-align: left;><b><span id="timer"></b></td>
+    <td text-align: left;></td>
   </tr>
 </table>
 
 </div>
+</div>
+
+<div class="row">
+  <hr>
+  <div class="col-lg-12">
+    <section id="contents">
+      <h4 align="center">ADD THE CONTENTS OF YOUR MAIN TASK HERE</h4>
+      <h3 align="center"><span id="worker_count"></span></h3>
+    </section>
+  </div>
 </div>
 
 <div class="row">
@@ -51,7 +75,9 @@
 </div>
 <!-- End of container -->
 
+<script type="text/javascript" src="{{url_for('static', filename='js/timer.js')}}"></script>
 
+<script type="text/javascript" src="{{url_for('static', filename='js/main_task.js')}}"></script>
 
 
 {% endblock %}

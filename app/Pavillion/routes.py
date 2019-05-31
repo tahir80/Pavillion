@@ -159,55 +159,13 @@ def sns():
 @Pavillion.route('/waiting_task', methods=['GET', 'POST'])
 def waiting_task():
 
-    try:
-        active_task = Task.query.filter_by(task_status="Active").first()
-
-        if active_task == None:
-            instructions = "Not available"
-            fix_price = 0.0
-            task_id = None
-        else:
-            instructions = active_task.Instructions
-            fix_price = active_task.fix_price
-            task_id = active_task.id
-
-        #The following code segment can be used to check if the turker has accepted the task yet
-        if request.args.get("assignmentId") == "ASSIGNMENT_ID_NOT_AVAILABLE":
-            pass
-        else:
-            #get the worker ID and Assignment ID
-            w_id = request.args.get("workerId")
-            assign_id = request.args.get("assignmentId")
-
-            # to access page without AMT for testing
-            #----------------------------------------
-            if w_id is None and assign_id is None:
-                pass
-           #-----------------------------------------
-            else:
-                pass
-
-    except exc.IntegrityError:
-        pass
-
     render_data = {
         "worker_id": request.args.get("workerId"),
         "assignment_id": request.args.get("assignmentId"),
         "amazon_host": AMAZON_HOST,
-        "hit_id": request.args.get("hitId"),
-        "some_info_to_pass": request.args.get("someInfoToPass"),
-        "Inst":instructions,
-        "fix_price": fix_price,
-        "task_id": task_id
-    }
+        "hit_id": request.args.get("hitId")}
 
-    resp = make_response(render_template("waiting_room.html", name = render_data))
-
-    #This is particularly nasty gotcha.
-    #Without this header, your iFrame will not render in Amazon
-    resp.headers['x-frame-options'] = 'this_can_be_anything'
-    return resp
-
+    return render_template("waiting_task.html", name = render_data)
 
 ######################----MAIN TASk -----############################
 

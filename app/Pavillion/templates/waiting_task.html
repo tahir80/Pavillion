@@ -17,10 +17,10 @@
 
   <div class="row">
     <div class="col-lg-12" class="card card-body">
-      <h2 align="center">Waiting Room</h2>
+      <h2 align="center">Waiting Task</h2>
       <section id="instructions">
         <div id="demo" class="collapse in">
-
+          <h4>Write Instructions for Workers here</h4>
         </div>
         <br>
         <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">Hide Instructions</button>
@@ -57,6 +57,16 @@
     </div>
   </div>
 
+
+  <div class="row">
+    <hr>
+    <div class="col-lg-12">
+      <section id="contents">
+        <h4 align="center">ADD THE CONTENTS OF YOUR WAITING TASK HERE (IF ANY)</h4>
+        <h3 align="center"><span id="worker_count"></span></h3>
+      </section>
+    </div>
+  </div>
   <div class="row">
     <hr>
     <div class="col-lg-12">
@@ -71,7 +81,7 @@
 
 <script type="text/javascript" src="{{url_for('static', filename='js/timer.js')}}"></script>
 
-<script type="text/javascript" src="{{url_for('static', filename='js/waiting_room.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/waiting_task.js')}}"></script>
 
 
 

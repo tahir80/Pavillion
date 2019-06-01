@@ -21,8 +21,8 @@ Following conditions are handled in Pavilion:
 10. WTForms==2.2.1
 11. boto==2.49.0
 12. boto3==1.9.42
-13. Flask-SocketIO==3.0.2  
-Note: See requirements.txt for more packages.
+13. Flask-SocketIO==3.0.2 
+**Note:** See requirements.txt for more packages.
 
 
 

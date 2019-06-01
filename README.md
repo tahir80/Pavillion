@@ -57,8 +57,8 @@ git push heroku master
 1. login to AWS console (https://aws.amazon.com/console/)
 2. select Amazon S3 from storage
 3. click on create new bucket
-4. click next --> in manage users page, select public read acces becuase Heroku needs to access our Database
-5. when you click the bucket name, it will lead you to the page where you can add files
+4. click next --> in manage users page, select 'public read acces' becuase Heroku needs to access our Database
+5. when you click on the bucket name, it will lead you to a page where you can add files
 6. upload **"Pavilion_DB.backup"** --> it is inside the root folder
 7. click on the uploaded file --> copy the link and go to console again
 8. type this: heroku pg:backups:restore "https://s3.eu-central-1.amazonaws.com/mybookcatalogdatabase/local_db.backup"

@@ -48,6 +48,5 @@ practice in prod.py recommeded by heroku
 7. go back to app, and click on deploy and then run the following (you must be in the root folder of your project)
 ```git add .
 git commit -am "make it better"
-git commit
 git push heroku master
 ```

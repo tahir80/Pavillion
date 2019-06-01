@@ -38,20 +38,21 @@ You need to write your own code for the following;
 **Note:** See requirements.txt for more packages.
 
 ## Steps for deployment on Heroku
-1. Sign up for Heroku
-2. download and install Heroku CLI
-3. create an app first, give it a unique name
-4. then create a database --> click on resources tab under your newly created app --> search postgres --> and add hobby-dev (it's free)
-5. click on your database name -->click on settings -->credentials --> you can copy the URI to the prod.py file but its NOT RECOMMENDED, you don't need to do anything. Everything is setup in prod.py under config folder.
+1. clone our project
+2. Sign up for Heroku
+3. download and install Heroku CLI
+4. create an app first, give it a unique name
+5. then create a database --> click on resources tab under your newly created app --> search postgres --> and add hobby-dev (it's free)
+6. click on your database name -->click on settings -->credentials --> you can copy the URI to the prod.py file but its NOT RECOMMENDED, you don't need to do anything. Everything is setup in prod.py under config folder.
 practice in prod.py recommeded by heroku
-6. now come back to console and type: heroku login
-7. go back to app, and click on deploy and then run the following commands(you must be in the root folder of your project)
+7. now come back to console and type: heroku login
+8. go back to app, and click on deploy and then run the following commands(you must be in the root folder of your project)
 ```
 git add .
 git commit -am "make it better"
 git push heroku master
 ```
-8. you can open the website using heroku open or use provided url after successful installtion
+9. you can open the website using heroku open or use provided url after successful installtion
 
 ## AMAZON S3 storage
 1. login to AWS console (https://aws.amazon.com/console/)

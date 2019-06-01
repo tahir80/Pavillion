@@ -11,10 +11,10 @@ Following conditions are handled in Pavilion:
 ## Admin Controls
 In addition to managing workers in the active and waiting queue, We have also provided basic admin controls for;
 1. Creating a new project
-2. Creating a HIT/task on Amazon Mechanical 
+2. Creating a HIT/task on Amazon Mechanical Turk (MTurk)
 3. Stopping a current job maually --> this will auto-submit HITs from all workers
 4. Expiring a HIT 
-5. migrating workers manually if needed from waiting to active queue
+5. Migrating workers manually if needed from waiting to active queue
 
 ## What is missing?
 You need to write your own code for the following;
@@ -36,6 +36,7 @@ You need to write your own code for the following;
 12. boto3==1.9.42
 13. Flask-SocketIO==3.0.2 
 **Note:** See requirements.txt for more packages.
+
 ## Steps for deploying on Heroku
 
 

@@ -46,11 +46,12 @@ You need to write your own code for the following;
 practice in prod.py recommeded by heroku
 6. now come back to console and type: heroku login
 7. go back to app, and click on deploy and then run the following (you must be in the root folder of your project)
-```git add .  
+```  
 git commit -am "make it better" 
 git push heroku master```
 
-```git status
-git add
+```git add .
+git commit -am "make it better"
 git commit
+git push heroku master
 ```

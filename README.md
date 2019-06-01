@@ -37,6 +37,17 @@ You need to write your own code for the following;
 13. Flask-SocketIO==3.0.2   
 **Note:** See requirements.txt for more packages.
 
+## Local Testing
+uncomment the following code from run.py from the root folder
+```python
+#--------local testing----------------
+if __name__ == "__main__":
+    flask_app = create_app('dev')
+    with flask_app.app_context():
+        db.create_all()
+    flask_app.run()
+#------------------------------------------
+```
 ## Steps for deployment on Heroku
 1. clone our project
 2. Sign up for Heroku

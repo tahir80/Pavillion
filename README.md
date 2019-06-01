@@ -50,8 +50,7 @@ practice in prod.py recommeded by heroku
 git commit -am "make it better" 
 git push heroku master```
 
-```
-git status
+```git status
 git add
 git commit
 ```

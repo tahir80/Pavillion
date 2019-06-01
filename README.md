@@ -20,7 +20,6 @@ In addition to managing workers in the active and waiting queue, We have also pr
 You need to write your own code for the following;
 1. Handling payments of workers
 2. adding contents for waiting and main task pages
-3. any additional logic related to your project
 
 ## Requirements (selected)
 1. Flask==1.0.2
@@ -52,3 +51,4 @@ git add .
 git commit -am "make it better"
 git push heroku master
 ```
+8. you can open the website using heroku open or use provided url after successful installtion

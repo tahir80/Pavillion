@@ -8,7 +8,20 @@ Following conditions are handled in Pavilion:
 3) Worker leaves from active queue by returning HIT --> Pavilion moves worker from waiting to active queue
 4) Worker leaves from waiting queue by returning HIT --> NONE
 
-## Requirements
+## Admin Controls
+In addition to managing workers in the active and waiting queue, We have also provided basic admin controls for;
+1. Creating a new project
+2. Creating a HIT/task on Amazon Mechanical 
+3. Stopping a current job maually --> this will auto-submit HITs from all workers
+4. Expiring a HIT 
+5. migrating workers manually if needed from waiting to active queue
+
+## What is missing?
+You need to write your own code for the following;
+1. Handling payments of workers
+2. you need to add contents for waiting and main task pages
+
+## Requirements (selected)
 1. Flask==1.0.2
 2. Flask-Bcrypt==0.7.1
 3. Flask-Bootstrap==3.3.7.1
@@ -23,6 +36,6 @@ Following conditions are handled in Pavilion:
 12. boto3==1.9.42
 13. Flask-SocketIO==3.0.2 
 **Note:** See requirements.txt for more packages.
-
+## Steps for deploying on Heroku
 
 

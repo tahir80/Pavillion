@@ -19,7 +19,8 @@ In addition to managing workers in the active and waiting queue, We have also pr
 ## What is missing?
 You need to write your own code for the following;
 1. Handling payments of workers
-2. you need to add contents for waiting and main task pages
+2. adding contents for waiting and main task pages
+3. any additional logic related to your project
 
 ## Requirements (selected)
 1. Flask==1.0.2

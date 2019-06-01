@@ -11,19 +11,16 @@ Following conditions are handled in Pavilion:
 4) Worker leaves from waiting queue by returning HIT --> NONE
 
 ## Requirements
-Flask==1.0.2
-Flask-Bcrypt==0.7.1
-Flask-Bootstrap==3.3.7.1
-Flask-Login==0.4.1
-Flask-SQLAlchemy==2.3.2
-Flask-WTF==0.14.2
-gunicorn==18.0
-SQLAlchemy==1.2.10
-WTForms==2.2.1
-boto==2.49.0
-boto3==1.9.42
-Flask-SocketIO==3.0.2
-First Header  | Second Header
-------------- | -------------
-Content Cell  | Content Cell
-Content Cell  | Content Cell
+1.Flask==1.0.2
+2.Flask-Bcrypt==0.7.1
+3.Flask-Bootstrap==3.3.7.1
+4.Flask-Login==0.4.1
+5.Flask-SQLAlchemy==2.3.2
+6.Flask-WTF==0.14.2
+7.gunicorn==18.0
+8.SQLAlchemy==1.2.10
+9.WTForms==2.2.1
+10.boto==2.49.0
+11.boto3==1.9.42
+12.Flask-SocketIO==3.0.2
+

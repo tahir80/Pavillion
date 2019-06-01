@@ -47,6 +47,6 @@ practice in prod.py recommeded by heroku
 6. now come back to console and type: heroku login
 7. go back to app, and click on deploy
 ```git add .
-   git commit -am "make it better"
-   git push heroku master```
+git commit -am 'make it better'
+git push heroku master```
 

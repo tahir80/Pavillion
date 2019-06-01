@@ -44,7 +44,6 @@ You need to write your own code for the following;
 4. create an app first, give it a unique name
 5. then create a database --> click on resources tab under your newly created app --> search postgres --> and add hobby-dev (it's free)
 6. click on your database name -->click on settings -->credentials --> you can copy the URI to the prod.py file but its NOT RECOMMENDED, you don't need to do anything. Everything is setup in prod.py under config folder.
-practice in prod.py recommeded by heroku
 7. now come back to console and type: heroku login
 8. go back to app, and click on deploy and then run the following commands(you must be in the root folder of your project)
 ```

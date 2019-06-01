@@ -1,9 +1,7 @@
 (function(){
   var messageResponses = '';
-  var chat = {
-
-    // $SCRIPT_ROOT:{{ request.script_root|tojson|safe }},
-    // messageResponses: '',
+  var main = {
+    socket: null,
     init: function() {
       this.cacheDOM();
       this.subscribe();
@@ -35,9 +33,6 @@
         var string = "SUBMIT_WORK_ACTIVE";
         $('input[name="user-input"]').val(string);
         $("#endForm").submit();
-        // window.parent.$('#iframe_contents').attr('src', "https://pepperanywhere.herokuapp.com/feedback?workerId=" + this.gup("workerId") +
-        //   "&time_waited=" + result + "&reward=" + reward + "&stage=active" +
-        //   "&assignmentId=" + this.gup("assignmentId") + "&hitId=" + this.gup("hitId"));
       }
     },
 
@@ -91,15 +86,11 @@
      $('input[name="user-input"]').val(string);
      $("#endForm").submit();
 
-     // window.parent.$('#iframe_contents').attr('src', "https://pepperanywhere.herokuapp.com/feedback?workerId=" + this.gup("workerId") +
-     //   "&time_waited=" + result + "&reward=" + reward + "&stage=active" +
-     //   "&assignmentId=" + this.gup("assignmentId") + "&hitId=" + this.gup("hitId"));
-
    },
 
   };
 
-  chat.init();
+  main.init();
 
 
 

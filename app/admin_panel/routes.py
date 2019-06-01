@@ -55,10 +55,9 @@ def create_project():
 def create_task(project_id):
     form = CreateNewTask()
     if form.validate_on_submit():
-        task = Task(project_id, "Not Active", form.hit_title.data, form.hit_desc.data, form.instructions.data,
-                    form.keywords.data, form.fix_price.data, form.time_limit.data*60,
-                     form.hourly_rate.data, form.work_rate.data, form.country.data, form.percent_approved.data,
-                     form.HITS_approved.data, form.task_url.data, form.waiting_time_window.data, form.min_active.data,
+        task = Task(project_id, "Not Active", form.hit_title.data, form.hit_desc.data,
+                    form.keywords.data, form.fix_price.data, form.time_limit.data*60, form.country.data, form.percent_approved.data,
+                     form.HITS_approved.data, form.task_url.data, form.min_active.data,
                      form.min_waiting.data, form.max_active.data, form.max_waiting.data, datetime.datetime.utcnow())
 
         db.session.add(task)
@@ -84,10 +83,6 @@ def postTask(task_id):
         flash('This Task is already Live!')
         return redirect(url_for('main.list_tasks', project_id=task.p_id))
     else:
-        #Here, I create two sample qualifications
-        # qualifications = Qualifications()
-        # qualifications.add(PercentAssignmentsApprovedRequirement(comparator="GreaterThan", integer_value=str(task.approval_rate)))
-        # qualifications.add(NumberHitsApprovedRequirement(comparator="GreaterThan", integer_value=str(hit.number_of_HITS)))
 
         #frame_height in pixels
         frame_height = 800
@@ -98,9 +93,7 @@ def postTask(task_id):
             Title=task.title,
             Description=task.Description,
             Keywords=task.keywords,
-            #duration is in seconds
             AssignmentDurationInSeconds = task.time_limit,
-            #max_assignments will set the amount of independent copies of the task (turkers can only see one)
             MaxAssignments=task.max_active + task.max_waiting,
             Question=questionform,
             Reward=str(task.fix_price),
@@ -147,7 +140,7 @@ def postTask(task_id):
         connection.update_notification_settings(
         HITTypeId = create_hit_result['HIT']['HITTypeId'],
         Notification = {
-         'Destination': 'arn:aws:sns:us-east-1:165563650294:track-myhits',
+         'Destination': 'YOUR_TOPIC_ON_AMAZON_SNS',
          'Transport':'SNS',
          'Version':'2014-08-15',
          'EventTypes':['AssignmentAbandoned', 'AssignmentReturned',
@@ -156,78 +149,6 @@ def postTask(task_id):
         return redirect(url_for('main.list_tasks', project_id=task.p_id))
 
 
-@main.route('/payments/<task_id>')
-@login_required
-def payments(task_id):
-    return render_template('payments.html')
-
-@main.route('/approve/<assign_id>/<worker_id>/<bonus>/<session_id>/<task_id>')
-@login_required
-def approve(assign_id, worker_id, bonus, session_id, task_id):
-    error_occured = False
-    try:
-
-        assign = Assignments.query.filter(Assignments.s_id == session_id).\
-                               filter(Assignments.assign_id == assign_id).first()
-
-        if assign.status_id == 6:
-            flash('Already approved!')
-
-        else:
-            response = connection.approve_assignment(
-            AssignmentId=assign_id,
-            RequesterFeedback='Congratulations! Your HIT was approved.')
-
-            print(response)
-            if str(bonus) == '0.0':
-                pass
-            else:
-                response = connection.send_bonus(
-                WorkerId=worker_id,
-                BonusAmount=str(bonus),
-                AssignmentId=assign_id,
-                Reason='Congratulations. You earned a bonus of amount = ' + bonus)
-
-                print(response)
-
-            assign.status_id = 6 #approved
-            db.session.commit()
-
-    except Exception as e:
-        error_occured = True
-        flash('An error was found while approving assignment')
-        print(e)
-
-    if not error_occured:
-        flash('Assignment was Approved!')
-    return redirect(url_for('main.payments', task_id=task_id))
-
-@main.route('/reject/<assign_id>/<session_id>/<task_id>')
-@login_required
-def reject(assign_id, session_id, task_id):
-    error_occured = False
-    try:
-        assign = Assignments.query.filter(Assignments.s_id == session_id).\
-                               filter(Assignments.assign_id == assign_id).first()
-
-        feedback = 'Sorry, Your work was not approved. You might have spent less time in either waiting or active stage or contributed less than the required threshold.If you have any doubts, please send an email to requester. We can revert the rejections!'
-
-        response = connection.reject_assignment(
-                    AssignmentId=assign_id,
-                    RequesterFeedback=feedback)
-
-        assign.status_id = 7 #rejected
-        db.session.commit()
-
-    except Exception as e:
-        error_occured = True
-        flash('An error was found while rejecting assignment')
-        print(e)
-
-    if not error_occured:
-      flash('Assignment was Rejected Successfully!')
-    return redirect(url_for('main.payments', task_id=task_id))
-
 @main.route('/cloning/<task_id>/<project_id>', methods=['GET', 'POST'])
 @login_required
 def cloning(task_id, project_id):
@@ -235,10 +156,9 @@ def cloning(task_id, project_id):
     try:
         task = Task.query.filter(and_(Task.id==task_id, Task.p_id==project_id)).first()
 
-        task = Task(project_id, "Not Active", task.title, task.Description, task.Instructions,
-                    task.keywords, task.fix_price, task.time_limit,
-                    task.hourly_rate, task.work_rate, task.country, task.approval_rate,
-                    task.number_of_HITS, task.task_url, task.waiting_time_window, task.min_active,
+        task = Task(project_id, "Not Active", task.title, task.Description,
+                    task.keywords, task.fix_price, task.time_limit,task.country, task.approval_rate,
+                    task.number_of_HITS, task.task_url, task.min_active,
                     task.min_waiting, task.max_active, task.max_waiting, datetime.datetime.utcnow())
 
         db.session.add(task)
@@ -261,7 +181,6 @@ def edit_task(project_id, task_id):
     if request.method == 'GET':
         form.hit_title.data = task.title
         form.hit_desc.data = task.Description
-        form.Condition.data = task.Instructions
         form.keywords.data = task.keywords
         form.fix_price.data = task.fix_price
         form.time_limit.data = int(task.time_limit / 60)
@@ -276,7 +195,6 @@ def edit_task(project_id, task_id):
     if form.validate_on_submit():
         task.title = form.hit_title.data
         task.Description = form.hit_desc.data
-        task.Instructions = form.Condition.data
         task.keywords = form.keywords.data
         task.fix_price = form.fix_price.data
         task.time_limit = form.time_limit.data*60

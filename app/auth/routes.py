@@ -8,7 +8,6 @@ from flask import render_template, request, redirect, url_for, flash # for flash
 from app.auth.models import User
 
 @at.route('/register', methods = ['GET', 'POST'])
-@login_required
 def register_user():
 
     if current_user.is_authenticated:

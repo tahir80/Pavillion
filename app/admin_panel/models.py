@@ -81,33 +81,26 @@ class Task(db.Model):
 
     date_created = db.Column(db.DateTime, default = datetime.datetime.utcnow())
 
-    def __init__(self, p_id, task_status, title, Description, Instructions, keywords, fix_price, time_limit,
-                 hourly_rate, work_rate, country, approval_rate, number_of_HITS, task_url, waiting_time_window,
-                 min_active, min_waiting, max_active, max_waiting, date_created):
+    def __init__(self, p_id, task_status, title, Description, keywords, fix_price, time_limit, \
+                 country, approval_rate, number_of_HITS, task_url,min_active, \
+                 min_waiting, max_active, max_waiting, date_created):
             self.p_id = p_id
             # self.HIT_id = HIT_id
             self.task_status = task_status
             self.title = title
             self.Description = Description
-            self.Instructions = Instructions
             self.keywords = keywords
             self.fix_price = fix_price
             self.time_limit = time_limit
-            self.hourly_rate = hourly_rate
-            self.work_rate = work_rate
             self.country = country
             self.approval_rate = approval_rate
             self.number_of_HITS = number_of_HITS
             self.task_url = task_url
-
-            self.waiting_time_window = waiting_time_window
             self.min_active = min_active
             self.min_waiting = min_waiting
             self.max_active = max_active
             self.max_waiting = max_waiting
             self.date_created = date_created
-
-
 
     def __repr__(self):
         return 'Task name'.format(self.title)

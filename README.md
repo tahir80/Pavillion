@@ -38,7 +38,7 @@ You need to write your own code for the following;
 **Note:** See requirements.txt for more packages.
 
 ## Local Testing
-uncomment the following code from run.py from the root folder
+uncomment the following code from run.py from the root folder. Make sure that create_app contains 'dev' as an argument. For production settings, change this to 'prod'
 ```python
 #--------local testing----------------
 if __name__ == "__main__":
@@ -48,6 +48,7 @@ if __name__ == "__main__":
     flask_app.run()
 #------------------------------------------
 ```
+Then simply type: ```python run.py ```
 ## Steps for deployment on Heroku
 1. clone our project
 2. Sign up for Heroku

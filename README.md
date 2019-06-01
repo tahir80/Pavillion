@@ -50,7 +50,7 @@ if __name__ == "__main__":
 ```
 Then simply type: ```python run.py ```
 ## Steps for deployment on Heroku
-1. clone our project
+1. clone our project and set it up in local git repository.
 2. Sign up for Heroku
 3. download and install Heroku CLI
 4. create an app first, give it a unique name

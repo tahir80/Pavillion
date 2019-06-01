@@ -45,7 +45,7 @@ You need to write your own code for the following;
 5. click on your database name -->click on settings -->credentials --> you can copy the URI to the prod.py file but its NOT RECOMMENDED, you dont need to do anything. Everything is setup in prod.py under config folder.
 practice in prod.py recommeded by heroku
 6. now come back to console and type: heroku login
-7. go back to app, and click on deploy
+7. go back to app, and click on deploy and then run the following (you must be in the root folder of your project)
 ```git add .  ```
 ```git commit -am "make it better" ```
 ```git push heroku master```

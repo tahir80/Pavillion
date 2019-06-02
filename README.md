@@ -101,7 +101,7 @@ git push heroku master
 ```
 9. you can open the website using heroku open or use provided url after successful installtion
 
-## AMAZON S3 storage
+### AMAZON S3 storage
 1. login to AWS console (https://aws.amazon.com/console/)
 2. select Amazon S3 from storage
 3. click on create new bucket

@@ -9,7 +9,7 @@ Following conditions are handled in Pavilion:
 4) When worker leaves from the waiting queue by returning HIT --> NONE
 
 ## Admin Controls
-In addition to managing workers in the active and waiting queue, We have also provided basic admin controls for;
+In addition to managing workers in the active and waiting queue, we have also provided basic admin controls for;
 1. Creating a new project
 2. Creating a HIT/task on Amazon Mechanical Turk (MTurk)
 3. Stopping a current job manually --> this will auto-submit HITs from all workers

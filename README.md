@@ -48,6 +48,10 @@ if __name__ == "__main__":
     flask_app.run()
 #------------------------------------------
 ```
+To register yourself as Admin: http://127.0.0.1:5000/register
+To create a new project: http://127.0.0.1:5000/create_project
+See waiting sample page: http://127.0.0.1:5000/waiting_task
+See main task sample page: http://127.0.0.1:5000/main_task
 Then simply type: ```python run.py ```
 ## Steps for deployment on Heroku
 1. clone our project and set it up in local git repository.

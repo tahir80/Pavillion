@@ -68,7 +68,7 @@ You need to write your own code for the following;
 See requirements.txt for details about required dependencies.
 
 ## Local Testing
-uncomment the following code from run.py from the root folder. Make sure that create_app contains 'dev' as an argument. For production settings, change this to 'prod'
+Uncomment the following code from run.py containing in the root folder. Make sure that ***create_app*** contains 'dev' as an argument. For production settings, change this to 'prod'
 ```python
 #--------local testing----------------
 if __name__ == "__main__":

@@ -7,10 +7,16 @@ Following conditions are handled in Pavilion:
 2) When worker leaves from the active queue by submitting HIT --> **a)** Pavilion moves worker from waiting to active queue, **b)** Pavilion hires a new worker to fullfil the deficiency in the waiting queue
 3) When worker leaves from the active queue by returning HIT --> Pavilion moves worker from waiting to the active queue
 4) When worker leaves from the waiting queue by returning HIT --> NONE
-## Main logic for Pavilion
+
+## Main Logic for Pavilion
 The main logic for Pavilion is contained in Pavilion\app\Pavilion\events.py file.
 
-### Connected event handler
+This event handler will expire a running HIT
+```python 
+@socketio.on('expireHIT', namespace='/chat')
+```
+
+
 
 
 ## Admin Controls

@@ -64,21 +64,8 @@ You need to write your own code for the following;
 1. Handling payments of workers
 2. you need to write task related logic (Pavilion\app\Pavilion --> events.py) and database tables (models.py)
 
-## Requirements (selected)
-1. Flask==1.0.2
-2. Flask-Bcrypt==0.7.1
-3. Flask-Bootstrap==3.3.7.1
-4. Flask-Login==0.4.1
-5. Flask-SQLAlchemy==2.3.2
-6. Flask-WTF==0.14.2
-7. gunicorn==18.0
-8. eventlet==0.24.1
-9. SQLAlchemy==1.2.10
-10. WTForms==2.2.1
-11. boto==2.49.0
-12. boto3==1.9.42
-13. Flask-SocketIO==3.0.2   
-**Note:** See requirements.txt for more packages.
+## Requirements
+See requirements.txt for details about required dependencies.
 
 ## Local Testing
 uncomment the following code from run.py from the root folder. Make sure that create_app contains 'dev' as an argument. For production settings, change this to 'prod'

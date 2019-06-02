@@ -62,7 +62,7 @@ In addition to managing workers in the active and waiting queue, we have also pr
 ## What is missing?
 You need to write your own code for the following;
 1. Handling payments of workers
-2. you need to write task related logic (Pavilion\app\Pavilion --> events.py) and database tables (models.py)
+2. you need to write task related logic (Pavilion\app\Pavilion --> events.py) and database tables (Pavilion\app\Pavilion --> models.py)
 
 ## Requirements
 See requirements.txt for details about required dependencies.

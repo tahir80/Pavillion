@@ -45,8 +45,8 @@ Now if you see ***Pavilion\app\Pavilion\routes.py***, you will find this ***/api
 @Pavilion.route('/api/from_mturk', methods = ['GET', 'POST', 'PUT'])
 ```
 This uses Amazon Simple Notification System (SNS). For setting up SNS, see following links;
-a. https://blog.mturk.com/tutorial-using-amazon-sns-with-amazon-mturk-a0c6562717cb (FOR NECESSARY STEPS)
-b. https://gist.github.com/iMilnb/bf27da3f38272a76c801 (FOR CONFIRMATION)
+1. https://blog.mturk.com/tutorial-using-amazon-sns-with-amazon-mturk-a0c6562717cb (FOR NECESSARY STEPS)
+2. https://gist.github.com/iMilnb/bf27da3f38272a76c801 (FOR CONFIRMATION)
 
 SNS will take care of all HITS that were either ***returned*** or ***abandoned*** and then updates queues accordingly as explained before.
 

@@ -95,7 +95,7 @@ def create_app(config_type):
     from app.auth import authentication   # import blueprint (the name was main)
     app.register_blueprint(authentication) # register blueprint
 
-    from app.Pavillion import Pavillion
-    app.register_blueprint(Pavillion)
+    from app.Pavilion import Pavilion
+    app.register_blueprint(Pavilion)
 
     return app

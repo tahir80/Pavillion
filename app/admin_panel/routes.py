@@ -1,10 +1,10 @@
 from app.admin_panel import main
-from app.Pavillion import Pavillion
+from app.Pavilion import Pavilion
 from app import db
 import datetime
 # from app.admin_panel.models import Book, Publication
 from app.admin_panel.models import Project, Task
-from app.Pavillion.models import LiveStatus, WorkerStatus, Worker, Session, \
+from app.Pavilion.models import LiveStatus, WorkerStatus, Worker, Session, \
                                      DetailedStatus, Assignments, SESSION_SQLALCHEMY
 
 from flask import render_template, flash, request, redirect, url_for, jsonify

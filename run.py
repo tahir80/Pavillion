@@ -1,7 +1,7 @@
 from app import create_app, db, socketio
 from app.auth.models import User
 from app.admin_panel.models import Project, Task
-from app.Pavillion.models import Session, LiveStatus, WorkerStatus, Worker, DetailedStatus,Assignments,SESSION_SQLALCHEMY
+from app.Pavilion.models import Session, LiveStatus, WorkerStatus, Worker, DetailedStatus,Assignments,SESSION_SQLALCHEMY
 from sqlalchemy import exc
 from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect

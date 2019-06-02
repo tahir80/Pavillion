@@ -1,9 +1,9 @@
 from app import db
 from app.auth.models import User
 from app.admin_panel.models import Project, Task
-from app.Pavillion.models import Session, LiveStatus, WorkerStatus, Worker, DetailedStatus, Assignments, SESSION_SQLALCHEMY
+from app.Pavilion.models import Session, LiveStatus, WorkerStatus, Worker, DetailedStatus, Assignments, SESSION_SQLALCHEMY
 
-from app.Pavillion import Pavillion
+from app.Pavilion import Pavilion
 
 from sqlalchemy import exc,asc, desc, and_, or_
 from flask_socketio import SocketIO, emit, join_room, leave_room, \
@@ -197,22 +197,14 @@ def connected(data):
     except exc.IntegrityError:
         pass
 
+#before moving to active queue, you can write logic to save waiting bonuses of workers in this event handler
 @socketio.on('IAmReady', namespace='/chat')
 def client_is_ready(data):
     workerId = data['worker']
     time_waited = data['time_waited']
     reward = data['reward']
 
-    try:
-        s = Session.query.filter_by(status="Live").first()
-        w = Worker.query.filter_by(AMT_worker_id=workerId).first()
-        reward_waiting = RewardWaiting(w.id, s.id,reward,time_waited)
-        reward_active = RewardActive(w.id, s.id,0)
-        db.session.add(reward_waiting)
-        db.session.add(reward_active)
-        db.session.commit()
-    except exc.IntegrityError:
-        pass
+    ###### WRITE YOUR LOGIC HERE#####
 
 @socketio.on('submit_waiting', namespace='/chat')
 def submit_waiting(data):
@@ -226,12 +218,13 @@ def submit_waiting(data):
     try:
         s = Session.query.filter_by(status="Live").first()
         w = Worker.query.filter_by(AMT_worker_id=workerId).first()
-        reward_waiting = RewardWaiting(w.id, s.id,reward,time_waited)
-        db.session.add(reward_waiting)
+
+        ###WRITE LOGIC HERE TO SAVE THE BONUS OF WORKER IN THE DB#######
+
         #change status from 'waiting' --> 'submitted', only select worker who is waiting
         live_status = LiveStatus.query.filter(and_(LiveStatus.w_id == w.id, LiveStatus.status_id == 1)).first()
-        # live_status = LiveStatus.query.filter_by(w_id=w.id).first()
-        live_status.status_id = 3
+
+        live_status.status_id = 3 #change status from waiting --> submitted
 
         #add row to DetailedStatus Table
         ds = DetailedStatus(live_status.id, 3, datetime.datetime.utcnow())
@@ -267,7 +260,7 @@ def submit_active(data):
 
     try:
 
-        ############STEP #1: Change the status of worker who submit the job#########################
+        ############Change the status of worker who submit the job#########################
         s = Session.query.filter_by(status="Live").first()
         w = Worker.query.filter_by(AMT_worker_id=workerId).first()
 
@@ -285,10 +278,7 @@ def submit_active(data):
                                     filter(Assignments.assign_id==assignId).first()
         assigns.status_id = 3
 
-        #update the RewardActive Table with total waiting time  + time based Bonus (Duplicate workers: again only latest worker from the current session)
-        reward_active = RewardActive.query.filter(and_(RewardActive.w_id==w.id, RewardActive.s_id==s.id)).order_by(desc(RewardActive.time_stamp)).first()
-        reward_active.waited_time = data['time_waited']
-        reward_active.time_based_bonus = 0.0
+        ##### WRITE YOUR LOGIC HERE TO SAVE BONUSES OF WORKERS BEFORE LEAVING#####
 
         db.session.commit()
 
@@ -311,8 +301,7 @@ def submit_active(data):
 
         waiting_workers_count = LiveStatus.query.filter(LiveStatus.status_id == 1).count()
         active_workers_count = LiveStatus.query.filter(LiveStatus.status_id == 2).count()
-        print('waiting_workers_count', waiting_workers_count)
-        print('active_workers_count', active_workers_count)
+
         #You need to check whether any waiting worker can be moved to active list?
         if isMovePossible(waiting_workers_count, active_workers_count, MAX_ACTIVE, MIN_WAITING):
 
@@ -333,8 +322,7 @@ def submit_active(data):
     except exc.IntegrityError:
         pass
 
-    #Step 3:Post a new Job ###################################################
-    #Post a new Job, first check whether admin has pressed the 'stop' button? if admin press the stop
+    #first check whether admin has pressed the 'stop' button? if admin press the stop
     #button then the value of name would be 'no' and posting a job would be skipped.
     server_session = SESSION_SQLALCHEMY.query.filter_by(id=2).first()
     if server_session.Name == 'yes':

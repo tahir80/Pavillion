@@ -1,4 +1,4 @@
-from app.Pavillion import Pavillion
+from app.Pavilion import Pavilion
 from app.auth.models import User
 from app import create_app, db
 from sqlalchemy import exc,asc, desc, and_, or_
@@ -13,25 +13,20 @@ from flask import render_template, request, redirect, url_for, flash # for flash
 
 # from app.crowd_control.forms import CreateNewProject, CreateNewTask
 from app.admin_panel.models import Project, Task
-from app.Pavillion.models import Session, LiveStatus, WorkerStatus, Worker, DetailedStatus, Assignments, \
+from app.Pavilion.models import Session, LiveStatus, WorkerStatus, Worker, DetailedStatus, Assignments, \
                                      SESSION_SQLALCHEMY
 
-
-
 from flask import render_template, request, make_response, jsonify
-from watson_developer_cloud import AuthorizationV1 as Authorization
-from watson_developer_cloud import SpeechToTextV1 as SpeechToText
-from watson_developer_cloud import IAMTokenManager
 
 from boto.mturk.connection import MTurkConnection
 from boto.mturk.question import ExternalQuestion
 from boto.mturk.qualification import Qualifications, PercentAssignmentsApprovedRequirement, NumberHitsApprovedRequirement
 from boto.mturk.price import Price
 
-from oocsi import OOCSI
+
 
 from app import socketio, endpoint_url, AMAZON_HOST
-from app.Pavillion.events import isMovePossible, postJob
+from app.Pavilion.events import isMovePossible, postJob
 from app import socketio
 from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect
@@ -140,7 +135,7 @@ def msg_process(msg, tstamp):
         pass
 
 # do stuff here, like calling your favorite SMS gateway API
-@Pavillion.route('/api/from_mturk', methods = ['GET', 'POST', 'PUT'])
+@Pavilion.route('/api/from_mturk', methods = ['GET', 'POST', 'PUT'])
 def sns():
     # AWS sends JSON with text/plain mimetype
 
@@ -156,7 +151,7 @@ def sns():
 
     return 'OK\n'
 
-@Pavillion.route('/waiting_task', methods=['GET', 'POST'])
+@Pavilion.route('/waiting_task', methods=['GET', 'POST'])
 def waiting_task():
 
     render_data = {
@@ -169,7 +164,7 @@ def waiting_task():
 
 ######################----MAIN TASk -----############################
 
-@Pavillion.route('/main_task', methods=['GET', 'POST'])
+@Pavilion.route('/main_task', methods=['GET', 'POST'])
 def main_task():
 
     active_task = Task.query.filter_by(task_status="Active").first()

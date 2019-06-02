@@ -73,9 +73,7 @@
         this.$start_task_btn.attr("DISABLED", "disabled");
         this.$submit_task_btn.attr("DISABLED", "disabled");
       } else {
-        //when the task is accepted. Do not let them to enter into main task
-        this.$start_task_btn.attr("DISABLED", "disabled");
-
+    
         this.socket.emit('connected', {
           workerId: this.gup("workerId"),
           aid: this.gup("assignmentId"),

@@ -3,10 +3,10 @@ Pavilion algorithm handles asynchronous arrival/departure of workers in the wait
 ## Introduction
 Pavilion tries to retain workers in the active queue -- a queue which contains workers who are engaged with the task-- in addition to waiting queue based on turnover conditions (e.g. when workers leave the task either from the waiting or active queue). A worker can leave the task either when she submits a task, returns it, or abandons it.
 Following conditions are handled in Pavilion:
-1) Worker leaves from waiting queue by submitting Human Intelligence Task (HIT) --> Pavilion hires a new worker
-2) Worker leaves from the active queue by submitting HIT --> **a)** Pavilion moves worker from waiting to active queue, **b)** Pavilion hires a new worker to fullfil the deficiency in the waiting queue
-3) Worker leaves from the active queue by returning HIT --> Pavilion moves worker from waiting to the active queue
-4) Worker leaves from the waiting queue by returning HIT --> NONE
+1) When worker leaves from waiting queue by submitting Human Intelligence Task (HIT) --> Pavilion hires a new worker
+2) When worker leaves from the active queue by submitting HIT --> **a)** Pavilion moves worker from waiting to active queue, **b)** Pavilion hires a new worker to fullfil the deficiency in the waiting queue
+3) When worker leaves from the active queue by returning HIT --> Pavilion moves worker from waiting to the active queue
+4) When worker leaves from the waiting queue by returning HIT --> NONE
 
 ## Admin Controls
 In addition to managing workers in the active and waiting queue, We have also provided basic admin controls for;
@@ -48,11 +48,13 @@ if __name__ == "__main__":
     flask_app.run()
 #------------------------------------------
 ```
-To register yourself as Admin: http://127.0.0.1:5000/register
-To create a new project: http://127.0.0.1:5000/create_project
-See waiting sample page: http://127.0.0.1:5000/waiting_task
-See main task sample page: http://127.0.0.1:5000/main_task
 Then simply type: ```python run.py ```
+
+1. To register yourself as Admin: http://127.0.0.1:5000/register
+2. To create a new project: http://127.0.0.1:5000/create_project
+3. See waiting sample page: http://127.0.0.1:5000/waiting_task
+4. See main task sample page: http://127.0.0.1:5000/main_task
+
 ## Steps for deployment on Heroku
 1. clone our project and set it up in local git repository.
 2. Sign up for Heroku

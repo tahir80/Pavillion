@@ -19,7 +19,7 @@ This event handler allows clients (crowd interfaces) to submit HITs automaticall
 ```python 
 @socketio.on('stop_this_job', namespace='/chat')
 ```
-This is important event handler.  
+Connected is the most important event handler.  
 ```python 
 @socketio.on('connected', namespace='/chat')
 ```

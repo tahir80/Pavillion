@@ -7,6 +7,11 @@ Following conditions are handled in Pavilion:
 2) When worker leaves from the active queue by submitting HIT --> **a)** Pavilion moves worker from waiting to active queue, **b)** Pavilion hires a new worker to fullfil the deficiency in the waiting queue
 3) When worker leaves from the active queue by returning HIT --> Pavilion moves worker from waiting to the active queue
 4) When worker leaves from the waiting queue by returning HIT --> NONE
+## Main logic for Pavilion
+The main logic for Pavilion is contained in Pavilion\app\Pavilion\events.py file.
+
+### Connected event handler
+
 
 ## Admin Controls
 In addition to managing workers in the active and waiting queue, we have also provided basic admin controls for;
@@ -19,7 +24,7 @@ In addition to managing workers in the active and waiting queue, we have also pr
 ## What is missing?
 You need to write your own code for the following;
 1. Handling payments of workers
-2. adding contents for waiting and main task pages
+2. you need to write task related logic (Pavilion\app\Pavilion --> events.py) and database tables (models.py)
 
 ## Requirements (selected)
 1. Flask==1.0.2

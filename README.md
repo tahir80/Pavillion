@@ -11,42 +11,44 @@ Following conditions are handled in Pavilion:
 ## Main Logic for Pavilion
 The main logic for Pavilion is contained in ***Pavilion\app\Pavilion\events.py*** file and ***Pavilion\app\Pavilion\routes.py***.
 
-This event handler expires a running HIT from admin --> EXPIRE HIT button on admin interface
+***expireHIT*** event handler expires a running HIT from admin --> EXPIRE HIT button on admin interface
 ```python 
 @socketio.on('expireHIT', namespace='/chat')
 ```
-This event handler allows clients (crowd interfaces) to submit HITs automatically --> STOP button on admin interface
+***stop_this_job*** event handler allows clients (crowd interfaces) to submit HITs automatically --> STOP button on admin interface
 ```python 
 @socketio.on('stop_this_job', namespace='/chat')
 ```
-Connected is the most important event handler.  
+***Connected*** is the most important event handler.  
 ```python 
 @socketio.on('connected', namespace='/chat')
 ```
-It does number of things;
+***Connected*** event handler does number of things;
 1. Checks whether a worker is a duplicate or new.
 2. adds workers in the waiting queue until they reach to minimum threshold.
 3. moves workers from waiting to active queue when they reach to minimum threshold.
 
-This event handler is called when a worker is pushed from waiting to active queue. You need to write a logic to store waiting task related bonuses. 
+***IAmReady*** event handler is called when a worker is pushed from waiting to active queue. You need to write a logic to store waiting task related bonuses. 
 ```python 
 @socketio.on('IAmReady', namespace='/chat')
 ```
-This event handler is called when a worker submits HIT while in the waiting queue. It changes the status of worker from waiting to submitted and also posts a new job. You may also need to write your own logic to store bonus related details.
+***submit_waiting*** event handler is called when a worker submits HIT while in the waiting queue. It changes the status of worker from waiting to submitted and also posts a new job. You may also need to write your own logic to store bonus related details.
 ```python 
 @socketio.on('submit_waiting', namespace='/chat')
 ```
-This event handler is called when a worker submits HIT while in the active queue. It changes the status of worker from active to submitted and also posts a new job. You may also need to write your own logic to store bonus related details.
+***submit_active*** event handler is called when a worker submits HIT while in the active queue. It changes the status of worker from active to submitted and also posts a new job. You may also need to write your own logic to store bonus related details.
 ```python 
 @socketio.on('submit_active', namespace='/chat')
 ```
-Now if you see ***Pavilion\app\Pavilion\routes.py***, you will find this event handler.
+Now if you see ***Pavilion\app\Pavilion\routes.py***, you will find this ***/api/from_mturk*** event handler.
 ```python 
 @Pavilion.route('/api/from_mturk', methods = ['GET', 'POST', 'PUT'])
 ```
-This uses Amazon Simple Notification System. for more details, see following links;
+This uses Amazon Simple Notification System (SNS). For setting up SNS, see following links;
 a. https://blog.mturk.com/tutorial-using-amazon-sns-with-amazon-mturk-a0c6562717cb (FOR NECESSARY STEPS)
 b. https://gist.github.com/iMilnb/bf27da3f38272a76c801 (FOR CONFIRMATION)
+
+SNS will take care of all HITS that were either ***returned*** or ***abandoned*** and then updates queues accordingly as explained before.
 
 
 ## Admin Controls
